@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "UserPage";
+}
+
+@{
+    if (Session["User"] == null)
+    { <div>Não autenticado</div>}
+}
+
+  <div>Olá @Session["Nome"]</div>
+  
+
+   @Html.ActionLink("Meus Gastos", "PlanilhaDeGastos")
+    

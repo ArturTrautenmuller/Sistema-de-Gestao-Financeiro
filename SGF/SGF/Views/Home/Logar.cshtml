@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "Logar";
+}
+
+@model SGF.Models.LoginDados
+<h2>Logar</h2>
+
+@using (Html.BeginForm("Autenticar", "Home", FormMethod.Post))
+{
+
+    <label>Email:</label> @Html.TextBoxFor(m => m.email) <br />
+    <label>Senha:</label> @Html.PasswordFor(m => m.senha)<br />
+
+    <input type="submit" value="Entrar" />
+
+
+
+
+}
+
+@{ if (Model.errorMessage != null)
+    {<script> alert("@Model.errorMessage");
+        </script> }
+}

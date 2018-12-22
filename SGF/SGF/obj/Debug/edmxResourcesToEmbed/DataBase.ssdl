@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SGFModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Gasto">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="tipoGasto_id" Type="int" />
+    <Property Name="mes" Type="int" />
+    <Property Name="ano" Type="int" />
+    <Property Name="valor" Type="float" />
+  </EntityType>
+  <EntityType Name="Item">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="gasto_id" Type="int" />
+    <Property Name="nome" Type="varchar" MaxLength="50" />
+    <Property Name="valor" Type="float" />
+  </EntityType>
+  <EntityType Name="TipoGasto">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nome" Type="varchar" MaxLength="50" />
+    <Property Name="usuario_id" Type="int" />
+  </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nome" Type="varchar" MaxLength="50" />
+    <Property Name="senha" Type="varchar" MaxLength="50" />
+    <Property Name="email" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_Gasto_TipoGasto">
+    <End Role="TipoGasto" Type="Self.TipoGasto" Multiplicity="0..1" />
+    <End Role="Gasto" Type="Self.Gasto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoGasto">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Gasto">
+        <PropertyRef Name="tipoGasto_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Item_Gasto">
+    <End Role="Gasto" Type="Self.Gasto" Multiplicity="0..1" />
+    <End Role="Item" Type="Self.Item" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gasto">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Item">
+        <PropertyRef Name="gasto_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TipoGasto_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+    <End Role="TipoGasto" Type="Self.TipoGasto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="TipoGasto">
+        <PropertyRef Name="usuario_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SGFModelStoreContainer">
+    <EntitySet Name="Gasto" EntityType="Self.Gasto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TipoGasto" EntityType="Self.TipoGasto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Gasto_TipoGasto" Association="Self.FK_Gasto_TipoGasto">
+      <End Role="TipoGasto" EntitySet="TipoGasto" />
+      <End Role="Gasto" EntitySet="Gasto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Item_Gasto" Association="Self.FK_Item_Gasto">
+      <End Role="Gasto" EntitySet="Gasto" />
+      <End Role="Item" EntitySet="Item" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TipoGasto_Usuario" Association="Self.FK_TipoGasto_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="TipoGasto" EntitySet="TipoGasto" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

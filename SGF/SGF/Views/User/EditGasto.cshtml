@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewBag.Title = "EditGasto";
+}
+@model SGF.Models.EditGastoView
+
+<link rel="stylesheet" href="~/Content/EditGastos.css" />
+
+<h2>EditGasto</h2>
+@{Session["GastoId"] = Model.gasto.id; }
+
+        <div>@Model.gasto.id</div>
+  
+        <div id="Tabela">
+            <table>
+                <tr>
+                    <td>Item</td>
+                    <td>Valor</td>
+                    <td>Ação</td>
+                </tr>
+                @{
+                    foreach (Item item in Model.gasto.Item)
+                    {
+                        <tr>
+                            <td>@item.nome</td>
+                            <td>@item.valor</td>
+                            <td><a href="@Url.Action("removerItem","user",item)">Remover</a></td>
+                        </tr>
+                    }
+                }
+
+                @using (Html.BeginForm("adicionarItem","User",FormMethod.Post))
+                {
+                    <tr>
+                        <th>@Html.TextBoxFor(m => m.itemNome)</th>
+                        <th>@Html.TextBoxFor(m => m.itemValor)</th>
+                        <th><input type="submit" value="Adicionar" /></th>
+                    </tr>
+                    
+                }
+            </table>
+
+           <a href="@Url.Action("PlanilhaDeGastos","User")">Retornar a Planilha de Gastos</a>
+         </div>
+           

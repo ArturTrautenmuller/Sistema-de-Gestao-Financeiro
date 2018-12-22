@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "EditCategorias";
+}
+@model SGF.Models.EditCategoriaView
+
+<link rel="stylesheet" href="~/Content/EditCategorias.css" />
+
+@{ 
+    List<TipoGasto> categorias = Model.tipoGasto.ToList();
+
+}
+
+<div id="Tabela">
+    <table>
+        @{ 
+            foreach (TipoGasto cat in categorias) {
+                <tr>
+                    <th>@cat.nome</th>
+                    <th><a href="@Url.Action("RemoverCategoria","User",cat)">Remover</a></th>
+                </tr>
+            }
+
+        }
+
+
+    </table>
+
+    @using (Html.BeginForm("AdicionarCategoria", "User", FormMethod.Post))
+    {
+        @Html.TextBoxFor(m => m.categoriaNome)
+        <input type="submit" value="Adicionar" />
+       
+    }
+
+</div>

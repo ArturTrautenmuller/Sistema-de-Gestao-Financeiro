@@ -1,0 +1,121 @@
+﻿
+@{
+    ViewBag.Title = "PlanilhaDeGastos";
+}
+@model SGF.Models.PlanilhaDeGastosView
+
+@{
+    List<String> anos = new List<string>();
+    String[] anosArray = { "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030", "2031", "2032", "2033", "2034", "2035", "2036", "2037", "2038", "2039", "2040", "2041", "2042", "2043", "2044", "2045", "2046", "2047", "2048" };
+    anos.AddRange(anosArray);
+
+
+    List<TipoGasto> categorias = Model.user.TipoGasto.ToList();
+    List<Gasto> todosGastos = new List<Gasto>();
+    foreach (TipoGasto cat in categorias) {
+
+        todosGastos.AddRange(cat.Gasto);
+    }
+
+
+ }
+    <link rel="stylesheet" href="~/Content/PlanilhaDeGastos.css" />
+
+<h2>PlanilhaDeGastos</h2>
+
+
+
+<div>
+   @using (Html.BeginForm("SetAno","User",FormMethod.Post))
+   {
+       
+       @Html.DropDownListFor(m => m.ano, new SelectList(anos),"Ano");
+       <input type="submit"  value="definir"/>
+
+   }
+
+    <label>Ano: @Session["Ano"]</label>
+</div>
+<div id="Tabela">
+    <table>
+        <tr>
+            <th>Categoria</th>
+            <th>Janeiro</th>
+            <th>Fevereiro</th>
+            <th>Março</th>
+            <th>Abril</th>
+            <th>Maio</th>
+            <th>Junho</th>
+            <th>Julho</th>
+            <th>Agosto</th>
+            <th>Setembro</th>
+            <th>Outubro</th>
+            <th>Novembro</th>
+            <th>Dezembro</th>
+        </tr>
+
+        @{
+
+            foreach (TipoGasto cat in categorias)
+            {
+
+
+                List<Gasto> catGastos = new List<Gasto>();
+
+                for (int i = 1; i <= 12; i++)
+                {
+
+                    var query = from gasto in todosGastos where (gasto.ano == (int)Session["Ano"] && gasto.mes == i && gasto.tipoGasto_id == cat.id) select gasto;
+                    try
+                    {
+                        catGastos.Add(query.ToList()[0]);
+                    }
+                    catch (Exception e)
+                    {
+                        Gasto g = new Gasto();
+                        g.valor = -1;
+                        g.tipoGasto_id = cat.id;
+                        g.mes = i;
+                        g.ano = (int)Session["Ano"];
+                        catGastos.Add(g);
+                    }
+
+                }
+                <tr>
+                    <th>@cat.nome</th>
+                    @foreach (Gasto valor in catGastos)
+                    {
+                        if (valor.valor == -1)
+                        {
+                            <th><a href="@Url.Action("criarGasto", "User", valor)">Criar</a></th>}
+                        else
+                        {
+                            <th><a href="@Url.Action("EditGasto", "User", valor)">@valor.valor</a></th>}
+                    }
+
+                </tr>
+
+
+            }
+            <tr>
+                <th>Total</th>
+            @for (int i = 1; i <= 12; i++) {
+                var query = from gasto in todosGastos where (gasto.ano == (int)Session["Ano"] && gasto.mes == i) select gasto;
+                double soma = 0;
+                foreach(Gasto gs in query.ToList()) {
+                    soma += (double)gs.valor;
+                }
+                <td>@soma</td>
+            }
+
+                </tr>
+        }
+
+    </table>
+
+    
+
+
+</div>
+
+<a href="@Url.Action("EditCategorias","User")">Gerenciar Categorias</a>

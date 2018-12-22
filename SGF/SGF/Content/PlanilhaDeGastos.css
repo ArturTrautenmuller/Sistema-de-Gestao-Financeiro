@@ -1,0 +1,22 @@
+﻿#Tabela {
+    width:1170px;
+    
+    background-color:#eee;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    width: 90px;
+    text-align: center;
+}
+
+a {
+    color: red;
+
+}

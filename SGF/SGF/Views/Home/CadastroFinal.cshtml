@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "CadastroFinal";
+}
+@model SGF.Usuario
+
+<h2>Cadastro realizado com sucesso.</h2>
+
+<div>@Model.nome</div>
+<div>@Model.email</div>
+
+
+<a href="@Url.Action("UserPage","User")">Ir para a pagina do usuario</a>
+

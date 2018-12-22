@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SGFModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Gasto">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="tipoGasto_id" Type="Int32" />
+    <Property Name="mes" Type="Int32" />
+    <Property Name="ano" Type="Int32" />
+    <Property Name="valor" Type="Double" />
+    <NavigationProperty Name="TipoGasto" Relationship="Self.FK_Gasto_TipoGasto" FromRole="Gasto" ToRole="TipoGasto" />
+    <NavigationProperty Name="Item" Relationship="Self.FK_Item_Gasto" FromRole="Gasto" ToRole="Item" />
+  </EntityType>
+  <EntityType Name="Item">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="gasto_id" Type="Int32" />
+    <Property Name="nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="valor" Type="Double" />
+    <NavigationProperty Name="Gasto" Relationship="Self.FK_Item_Gasto" FromRole="Item" ToRole="Gasto" />
+  </EntityType>
+  <EntityType Name="TipoGasto">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="usuario_id" Type="Int32" />
+    <NavigationProperty Name="Gasto" Relationship="Self.FK_Gasto_TipoGasto" FromRole="TipoGasto" ToRole="Gasto" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK_TipoGasto_Usuario" FromRole="TipoGasto" ToRole="Usuario" />
+  </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="senha" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="TipoGasto" Relationship="Self.FK_TipoGasto_Usuario" FromRole="Usuario" ToRole="TipoGasto" />
+  </EntityType>
+  <Association Name="FK_Gasto_TipoGasto">
+    <End Role="TipoGasto" Type="Self.TipoGasto" Multiplicity="0..1" />
+    <End Role="Gasto" Type="Self.Gasto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoGasto">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Gasto">
+        <PropertyRef Name="tipoGasto_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Item_Gasto">
+    <End Role="Gasto" Type="Self.Gasto" Multiplicity="0..1" />
+    <End Role="Item" Type="Self.Item" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gasto">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Item">
+        <PropertyRef Name="gasto_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TipoGasto_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+    <End Role="TipoGasto" Type="Self.TipoGasto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="TipoGasto">
+        <PropertyRef Name="usuario_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SGFEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Gasto" EntityType="Self.Gasto" />
+    <EntitySet Name="Item" EntityType="Self.Item" />
+    <EntitySet Name="TipoGasto" EntityType="Self.TipoGasto" />
+    <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+    <AssociationSet Name="FK_Gasto_TipoGasto" Association="Self.FK_Gasto_TipoGasto">
+      <End Role="TipoGasto" EntitySet="TipoGasto" />
+      <End Role="Gasto" EntitySet="Gasto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Item_Gasto" Association="Self.FK_Item_Gasto">
+      <End Role="Gasto" EntitySet="Gasto" />
+      <End Role="Item" EntitySet="Item" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TipoGasto_Usuario" Association="Self.FK_TipoGasto_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="TipoGasto" EntitySet="TipoGasto" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
