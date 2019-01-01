@@ -1,0 +1,195 @@
+﻿
+@{
+    ViewBag.Title = "PlanilhaDeGastos";
+}
+@model SGF.Models.PlanilhaDeGastosView
+
+@{
+    double[] gastosTotais = new double[12];
+
+    List<String> anos = new List<string>();
+    String[] anosArray = { "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030", "2031", "2032", "2033", "2034", "2035", "2036", "2037", "2038", "2039", "2040", "2041", "2042", "2043", "2044", "2045", "2046", "2047", "2048" };
+    anos.AddRange(anosArray);
+
+    double[] rendas = new double[12];
+    for (int i = 0; i <= 11; i++)
+    {
+        var query = from renda in Model.rendas where (renda.mes == i + 1) select renda;
+        try
+        {
+            rendas[i] = (double)query.ToList()[0].valor;
+        }
+        catch (Exception e)
+        {
+            rendas[i] = 0;
+        }
+    }
+
+
+    List<TipoGasto> categorias = Model.user.TipoGasto.ToList();
+    List<Gasto> todosGastos = new List<Gasto>();
+    foreach (TipoGasto cat in categorias)
+    {
+
+        todosGastos.AddRange(cat.Gasto);
+    }
+
+
+}
+
+<h2>PlanilhaDeGastos</h2>
+<link rel="stylesheet" href="~/Content/PlanilhaDeGastos.css" />
+
+
+<div>
+    @using (Html.BeginForm("SetAno", "Financeiro", FormMethod.Post))
+    {
+
+        @Html.DropDownListFor(m => m.ano, new SelectList(anos), "Ano", new { @class = "selectAno" });
+        <input type="submit" value="definir" class="definir" />
+
+    }
+
+    @{
+        int anoAnterior = (int)Session["Ano"] - 1;
+        int anoSeguinte = (int)Session["Ano"] + 1;
+
+    }
+
+    <a id="dec" href="@Url.Action("decrementarAno", "Financeiro")">❮  @anoAnterior</a>
+    <label id="anoLabel">@Session["Ano"]</label>
+    <a id="inc" href="@Url.Action("incrementarAno", "Financeiro")">@anoSeguinte  ❯</a>
+</div>
+<hr />
+<a id="gc" href="@Url.Action("EditCategorias","Financeiro")">Gerenciar Categorias</a>
+<a id="gs" href="@Url.Action("EditRenda","Financeiro")">Gerenciar Salário</a>
+<a id="e" href="@Url.Action("Estatisticas","Financeiro")">Estatisticas</a>
+
+<hr />
+
+<div id="Tabela">
+    <table>
+        <tr>
+            <th>Categoria</th>
+            <th id="m1">Janeiro</th>
+            <th id="m2">Fevereiro</th>
+            <th id="m3">Março</th>
+            <th id="m4">Abril</th>
+            <th id="m5">Maio</th>
+            <th id="m6">Junho</th>
+            <th id="m7">Julho</th>
+            <th id="m8">Agosto</th>
+            <th id="m9">Setembro</th>
+            <th id="m10">Outubro</th>
+            <th id="m11">Novembro</th>
+            <th id="m12">Dezembro</th>
+        </tr>
+
+        <tr>
+            <th>Salário</th>
+            @for (int i = 0; i <= 11; i++)
+            {
+            <th>@($"{rendas[i]:C}")</th>
+            }
+
+        </tr>
+
+        @{
+
+            foreach (TipoGasto cat in categorias)
+            {
+
+
+                List<Gasto> catGastos = new List<Gasto>();
+
+                for (int i = 1; i <= 12; i++)
+                {
+
+                    var query = from gasto in todosGastos where (gasto.ano == (int)Session["Ano"] && gasto.mes == i && gasto.tipoGasto_id == cat.id) select gasto;
+                    try
+                    {
+                        catGastos.Add(query.ToList()[0]);
+                    }
+                    catch (Exception e)
+                    {
+                        Gasto g = new Gasto();
+                        g.valor = -1;
+                        g.tipoGasto_id = cat.id;
+                        g.mes = i;
+                        g.ano = (int)Session["Ano"];
+                        catGastos.Add(g);
+                    }
+
+                }
+        <tr>
+            <th>@cat.nome</th>
+            @foreach (Gasto valor in catGastos)
+            {
+                if (valor.valor == -1)
+                {
+                    <th><a class="valor" href="@Url.Action("criarGasto", "Financeiro", valor)">Criar</a></th>}
+                else
+                {
+                    
+                        <th><a class="valor" href="@Url.Action("EditGasto", "Financeiro",valor)">@($"{valor.valor:C}")</a></th>}
+                    
+                
+
+            }
+
+        </tr>
+
+
+            }
+            <tr>
+                <th>Total</th>
+                @for (int i = 1; i <= 12; i++)
+                {
+                    var query = from gasto in todosGastos where (gasto.ano == (int)Session["Ano"] && gasto.mes == i) select gasto;
+                    double soma = 0;
+                    foreach (Gasto gs in query.ToList())
+                    {
+                        soma += (double)gs.valor;
+                    }
+                    gastosTotais[i - 1] = soma;
+                <td>@($"{soma:C}")</td>
+                }
+
+            </tr>
+        }
+
+            <tr>
+                <td>Restante</td>
+                @{
+                    for (int i = 0; i <= 11; i++)
+                    {
+                        double restante = rendas[i] - gastosTotais[i];
+                        if (restante >= 0)
+                        {
+                            <td class="restantePositivo">@($"{restante:C}")</td>
+                        }
+
+                        else
+                        {
+                            <td class="restanteNegativo">@($"{restante:C}")</td>
+                        }
+                    }
+                }
+            </tr>
+    </table>
+
+
+
+
+</div>
+
+<script>
+    var month = @DateTime.Now.Month
+    var year = @DateTime.Now.Year
+
+    if (year == @((int)Session["Ano"])) {
+        var th = document.getElementById("m" + month);
+        th.style.backgroundColor = "#0ff";
+        th.style.color = "white";
+    }
+</script>

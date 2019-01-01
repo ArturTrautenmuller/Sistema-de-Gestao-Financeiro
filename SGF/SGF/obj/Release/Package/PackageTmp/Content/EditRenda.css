@@ -1,0 +1,38 @@
+﻿label {
+    margin-right: 5px;
+    width: 100px;
+    text-align: left;
+    margin-top: 5px;
+}
+
+text{
+    margin-left: 5px;
+    width: 70px;
+    margin-top: 5px;
+
+}
+.submitButton {
+    margin-left: 130px;
+    margin-top: 5px;
+    width: 55px;
+    height:30px;
+    padding-top: 4px;
+}
+
+.retornarLink:link, .retornarLink:visited {
+    background-color: #00ff90;
+    color: white;
+    padding-top: 4px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    width: 90px;
+    height:30px;
+    margin-top: 5px;
+}
+
+
+.retornarLink:hover, .retornarLink:active {
+    background-color: red;
+    
+}

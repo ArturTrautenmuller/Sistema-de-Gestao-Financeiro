@@ -1,0 +1,258 @@
+﻿
+@{
+    ViewBag.Title = "Estatisticas";
+}
+@model SGF.Models.EstatisticasView
+
+@{
+    Renda[] rendas = new Renda[12];
+    for (int i = 1; i <= 12; i++)
+    {
+        var query = from renda in Model.rendas where (renda.mes == i) select renda;
+        try
+        {
+            rendas[i - 1] = query.ToList()[0];
+        }
+        catch (Exception e) { rendas[i - 1] = new Renda(); rendas[i - 1].valor = 0; }
+    }
+
+    double[] gastoTotal = new double[12];
+    for (int i = 1; i <= 12; i++)
+    {
+        var query = from gasto in Model.gastos where (gasto.mes == i) select gasto;
+        gastoTotal[i - 1] = 0;
+        foreach (Gasto gasto in query.ToList())
+        {
+            gastoTotal[i - 1] += (double)gasto.valor;
+        }
+    }
+
+    double[] restante = new double[12];
+    for (int i = 0; i <= 11; i++)
+    {
+        restante[i] = (double)rendas[i].valor - gastoTotal[i];
+    }
+
+    List<double> categoriaValor = new List<double>();
+    foreach (TipoGasto cat in Model.categorias)
+    {
+        double valor = 0;
+        var query = from gasto in cat.Gasto where (gasto.tipoGasto_id == cat.id && gasto.ano == (int)Session["Ano"]) select gasto;
+        foreach (Gasto gasto in query.ToList())
+        {
+            valor += (double)gasto.valor;
+        }
+        categoriaValor.Add(valor);
+    }
+
+    double valorTotal = 0;
+    foreach (double valor in categoriaValor)
+    {
+        valorTotal += valor;
+    }
+
+
+    double essencial = 0, naoEssencial = 0, investimento = 0;
+    foreach (Gasto gasto in Model.gastos)
+    {
+        var qEssencial = from item in gasto.Item where (item.tipo == 0 || item.tipo == null) select item;
+        foreach (Item item in qEssencial.ToList())
+        {
+            essencial += (double)item.valor;
+        }
+
+        var qNaoEssencial = from item in gasto.Item where (item.tipo == 1) select item;
+        foreach (Item item in qNaoEssencial.ToList())
+        {
+            naoEssencial += (double)item.valor;
+        }
+
+        var qInvestimento = from item in gasto.Item where (item.tipo == 2) select item;
+        foreach (Item item in qInvestimento.ToList())
+        {
+            investimento += (double)item.valor;
+        }
+
+
+
+    }
+
+}
+<meta http-equiv="Content-Type" content="text/html; charset="utf-8" />
+<link rel="stylesheet" href="~/Content/Estatisticas.css" />
+<h2>Estatisticas Ano @Session["Ano"]</h2>
+
+<div id="grafico">
+    <canvas class="grafico"></canvas>
+</div>
+<hr />
+<label id="categoriaLabel">Categorias</label><br />
+<div id="graficoCategorias">
+    <canvas class="graficoCategoria"></canvas>
+
+</div>
+<div id="categoriaDisplay">
+    <table>
+        <tr>
+            <td>Cor</td>
+            <td>Categoria</td>
+            <td>Valor</td>
+            <td>%</td>
+        </tr>
+        @{ for (int i = 0; i < Model.categorias.Count(); i++)
+            {
+                double percentage = (categoriaValor[i] / valorTotal) * 100;
+                <tr>
+                    <td id="@("colorLabel"+i)"></td>
+                    <td><label>@Model.categorias[i].nome</label> </td>
+                    <td><label>@($"{categoriaValor[i]:C}")</label></td>
+                    <td><label>@Math.Round(percentage, 2) %</label></td>
+                </tr>
+            }
+        }
+        <tr>
+            <td></td>
+            <td>Total</td>
+            <td>@($"{valorTotal:C}")</td>
+            <td>100%</td>
+
+        </tr>
+    </table>
+</div>
+<hr />
+<label id="tipoGastoLabel">Tipo de Gasto</label>
+<div id="graficoTipoItem">
+    <canvas class="graficoTipoItem"></canvas>
+
+</div>
+<div id="tipoItemDisplay">
+    @{
+        double essencialPercentage = (essencial / valorTotal) * 100;
+        double naoEssencialPercentage = (naoEssencial / valorTotal) * 100;
+        double investimentoPercentage = (investimento / valorTotal) * 100;
+    }
+
+    <table>
+        <tr>
+            <td><label>Tipo</label></td>
+            <td><label>Valor</label></td>
+            <td><label>%</label></td>
+
+        </tr>
+        <tr>
+
+            <td><label>Gastos Essenciais</label> </td>
+            <td><label>@($"{essencial:C}")</label></td>
+            <td><label>@Math.Round(essencialPercentage, 2) %</label></td>
+        </tr>
+
+        <tr>
+
+            <td><label>Gastos Não Essenciais</label> </td>
+            <td><label>@($"{naoEssencial:C}")</label></td>
+            <td><label>@Math.Round(naoEssencialPercentage, 2) %</label></td>
+        </tr>
+
+        <tr>
+
+            <td><label>Investimentos</label> </td>
+            <td><label>@($"{investimento:C}")</label></td>
+            <td><label>@Math.Round(investimentoPercentage, 2) %</label></td>
+        </tr>
+
+        <tr>
+            <td><label>Total</label></td>
+            <td><label>@($"{valorTotal:C}")</label></td>
+            <td><label>100 %</label></td>
+        </tr>
+    </table>
+
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script type="text/javascript" charset="iso-8859-1">
+    var ctx = document.getElementsByClassName("grafico");
+    var Alimentos = "alimentação";
+
+    //grafico
+    var chartGraph = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ["Janeiro", "Fevereiro", "Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"],
+            datasets: [
+                {
+                label: "Salário",
+                backgroundColor:'transparent',
+                borderColor: 'rgb(255, 99, 132)',
+                data: [@rendas[0].valor,@rendas[1].valor,@rendas[2].valor,@rendas[3].valor,@rendas[4].valor,@rendas[5].valor,@rendas[6].valor,@rendas[7].valor,@rendas[8].valor,@rendas[9].valor,@rendas[10].valor,@rendas[11].valor],
+                },
+                {
+                    label: "Gastos",
+                    backgroundColor: 'transparent',
+                    borderColor: 'rgb(0, 0, 255)',
+                    data: [@gastoTotal[0], @gastoTotal[1],@gastoTotal[2], @gastoTotal[3],@gastoTotal[4],@gastoTotal[5], @gastoTotal[6], @gastoTotal[7], @gastoTotal[8], @gastoTotal[9],@gastoTotal[10], @gastoTotal[11]],
+                },
+                {
+                    label: "Restante",
+                    backgroundColor: 'transparent',
+                    borderColor: 'rgb(255, 0, 0)',
+                    data: [@restante[0], @restante[1],@restante[2],@restante[3],@restante[4],@restante[5],@restante[6],@restante[7],@restante[8],@restante[9],@restante[10],@restante[11]],
+                }
+            ]
+
+        },
+        options: {}
+    });
+    //graficoCategorias
+    var ctxCategoria = document.getElementsByClassName("graficoCategoria");
+    var lbl = [];
+    var colors = ["#f00", "#0f0", "#00f", "#28B463", "#F4D03F", "#48C9B0", "#AF7AC5", "#58D68D", "#8E44AD", "#78281F", "#5D6D7E", "#0ff","#530E3F","#1265b3","#a145b2"];
+
+
+   @{ foreach(TipoGasto cat in Model.categorias) {
+           @: lbl.push("@cat.nome");
+
+       }}
+
+       var myPieChart = new Chart(ctxCategoria, {
+        type: 'doughnut',
+        data: {
+       labels: lbl,
+            datasets: [{
+                backgroundColor: colors,
+           data:[@{foreach(double valor in categoriaValor){
+                        @(valor+",")
+                    } }]
+            }]
+        },
+        options: {}
+    });
+
+    //Grafico Tipo Item
+    var ctxItem = document.getElementsByClassName("graficoTipoItem");
+    var myPieChart1 = new Chart(ctxItem, {
+        type: 'doughnut',
+        data: {
+            labels: ['Essencial', 'Não Essencial', 'Investimento'],
+            datasets: [{
+                backgroundColor:["#0f0","#f00","#00f"],
+                data:[@essencial,@naoEssencial,@investimento]
+            }]
+
+        },
+        options: {}
+
+    })
+
+    var catSize = @Model.categorias.Count()
+    for(i = 0; i < catSize; i++) {
+        if (i == colors.length) { break; }
+
+
+        document.getElementById("colorLabel" + i).style.backgroundColor = colors[i];
+
+    }
+
+</script>
+

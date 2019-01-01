@@ -1,0 +1,55 @@
+﻿#grafico {
+    width: 700px;
+    //height:500px;
+    margin-left:250px;
+}
+#graficoCategorias {
+    width: 500px;
+    height: 500px;
+    margin-left:350px;
+}
+#graficoDisplay {
+    margin-top:-500px;
+}
+#categoriaDisplay {
+    margin-top: 40px;
+    width: 500px;
+    background-color: #fefefe;
+    margin-left: 350px;
+}
+#graficoTipoItem {
+    width: 500px;
+    height: 500px;
+    margin-left: 350px;
+}
+
+#tipoItemDisplay {
+    margin-top: 40px;
+    width: 500px;
+    margin-left: 350px;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    width: 90px;
+    padding-bottom:10px;
+    padding-top:10px;
+    text-align: center;
+}
+
+#categoriaLabel{
+    width: 100px;
+    margin-left:550px;
+
+}
+
+#tipoGastoLabel {
+    width: 100px;
+    margin-left: 550px;
+}

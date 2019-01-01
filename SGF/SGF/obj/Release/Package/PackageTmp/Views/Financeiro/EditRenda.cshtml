@@ -1,0 +1,64 @@
+﻿
+@{
+    ViewBag.Title = "EditRenda";
+}
+@model SGF.Models.EditRendaView
+
+@{ 
+    Renda[] rendas = new Renda[12];
+    for (int i = 0; i <= 11; i++)
+    {
+        var query = from renda in Model.rendas where (renda.mes == i + 1) select renda;
+        rendas[i] = query.ToList()[0];
+    }
+}
+
+<script type="text/javascript">
+    function definir() {
+        var valor = document.getElementById("definirTodosText").value;
+        document.getElementById("i1").value = valor;
+        document.getElementById("i2").value = valor;
+        document.getElementById("i3").value = valor;
+        document.getElementById("i4").value = valor;
+        document.getElementById("i5").value = valor;
+        document.getElementById("i6").value = valor;
+        document.getElementById("i7").value = valor;
+        document.getElementById("i8").value = valor;
+        document.getElementById("i9").value = valor;
+        document.getElementById("i10").value = valor;
+        document.getElementById("i11").value = valor;
+        document.getElementById("i12").value = valor;
+        
+
+
+    }
+
+</script>
+
+<link rel="stylesheet" href="~/Content/EditRenda.css" />
+<h2>EditRenda</h2>
+
+<label>Ano: @Session["Ano"]</label>
+<form method="post" action="@Url.Action("setRendas", "Financeiro")">
+
+    <label>Definir Todos</label><input id="definirTodosText" type="text" value="" onchange="definir()" /><br /><br />
+    <label>Janeiro:</label><input id="i1" name="m1" type="text" value="@rendas[0].valor" /><br />
+    <label>Fevereiro:</label><input id="i2" name="m2" type="text" value="@rendas[1].valor" /><br />
+    <label>Março:</label><input id="i3" name="m3" type="text" value="@rendas[2].valor" /><br />
+    <label>Abril:</label><input id="i4" name="m4" type="text" value="@rendas[3].valor" /><br />
+    <label>Maio:</label><input id="i5" name="m5" type="text" value="@rendas[4].valor" /><br />
+    <label>Junho:</label><input id="i6" name="m6" type="text" value="@rendas[5].valor" /><br />
+    <label>Julho:</label><input id="i7" name="m7" type="text" value="@rendas[6].valor" /><br />
+    <label>Agosto:</label><input id="i8" name="m8" type="text" value="@rendas[7].valor" /><br />
+    <label>Setembro:</label><input id="i9" name="m9" type="text" value="@rendas[8].valor" /><br />
+    <label>Outubro:</label><input id="i10" name="m10" type="text" value="@rendas[9].valor" /><br />
+    <label>Novembro:</label><input id="i11" name="m11" type="text" value="@rendas[10].valor" /><br />
+    <label>Dezembro:</label><input id="i12" name="m12" type="text" value="@rendas[11].valor" /><br />
+
+
+
+
+    <a class="retornarLink" href="@Url.Action("PlanilhaDeGastos","Financeiro")">« Retornar </a> <input type="submit" value="Salvar" class="submitButton" />
+
+</form>
+

@@ -10,6 +10,6 @@ namespace SGF.Models
         public Gasto gasto { get; set; }
         public String itemNome { get; set; }
         public String itemValor { get; set; }
-        
+        public String itemTipo { get; set; }
     }
 }

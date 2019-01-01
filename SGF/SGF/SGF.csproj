@@ -155,6 +155,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\FinanceiroController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DataBase.Context.cs">
@@ -184,6 +185,8 @@
     <Compile Include="Models\CadastroDados.cs" />
     <Compile Include="Models\EditCategoriaView.cs" />
     <Compile Include="Models\EditGastoView.cs" />
+    <Compile Include="Models\EditRendaView.cs" />
+    <Compile Include="Models\EstatisticasView.cs" />
     <Compile Include="Models\IndexView.cs" />
     <Compile Include="Models\LAD.cs" />
     <Compile Include="Models\ModelToView.cs" />
@@ -191,6 +194,9 @@
     <Compile Include="Models\UsuarioView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\LoginDados.cs" />
+    <Compile Include="Renda.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="TipoGasto.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
@@ -203,9 +209,16 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Cadastro.css" />
+    <Content Include="Content\CadastroFinal.css" />
     <Content Include="Content\EditCategorias.css" />
     <Content Include="Content\EditGastos.css" />
+    <Content Include="Content\EditRenda.css" />
+    <Content Include="Content\Estatisticas.css" />
+    <Content Include="Content\Logar.css" />
     <Content Include="Content\PlanilhaDeGastos.css" />
+    <Content Include="Content\PlanilhaDeGastos1.css" />
+    <Content Include="Content\UserPage.css" />
     <Content Include="DataBase.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DataBase.edmx</DependentUpon>
@@ -232,6 +245,9 @@
     <Content Include="DataBase.edmx.diagram">
       <DependentUpon>DataBase.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\CustomProfile1.pubxml" />
+    <None Include="Properties\PublishProfiles\CustomProfile2.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -250,7 +266,9 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -259,9 +277,11 @@
     <Content Include="Views\Home\CadastroFinal.cshtml" />
     <Content Include="Views\Home\Logar.cshtml" />
     <Content Include="Views\User\UserPage.cshtml" />
-    <Content Include="Views\User\PlanilhaDeGastos.cshtml" />
-    <Content Include="Views\User\EditGasto.cshtml" />
-    <Content Include="Views\User\EditCategorias.cshtml" />
+    <Content Include="Views\Financeiro\PlanilhaDeGastos.cshtml" />
+    <Content Include="Views\Financeiro\EditGasto.cshtml" />
+    <Content Include="Views\Financeiro\EditRenda.cshtml" />
+    <Content Include="Views\Financeiro\EditCategorias.cshtml" />
+    <Content Include="Views\Financeiro\Estatisticas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

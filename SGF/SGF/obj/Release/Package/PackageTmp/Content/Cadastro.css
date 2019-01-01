@@ -1,0 +1,21 @@
+﻿label {
+    width: 50px;
+    text-align: left;
+    margin-top: 10px;
+}
+
+.submitButton {
+    margin-top: 20px;
+    background-color: aqua;
+    border-radius: 20px;
+    height: 40px;
+    width: 80px;
+    border-bottom-color: aqua;
+    color: white;
+}
+
+.textBox {
+    border-radius: 20px;
+    border-color: aqua;
+    height: 30px;
+}

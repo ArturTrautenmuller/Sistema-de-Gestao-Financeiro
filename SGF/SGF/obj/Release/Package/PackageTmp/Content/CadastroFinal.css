@@ -1,0 +1,15 @@
+﻿#seguirLink:link, #seguirLink:visited {
+    background-color: #00ff90;
+    color: white;
+    padding: 14px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 20px;
+    
+}
+
+
+#seguirLink:hover, #seguirLink:active {
+    background-color: red;
+}

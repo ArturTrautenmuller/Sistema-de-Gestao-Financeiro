@@ -1,0 +1,114 @@
+﻿#Tabela {
+    width: 1170px;
+    background-color: #eee;
+    margin-top: 20px;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    width: 90px;
+    text-align: center;
+}
+
+#gc:link, #gc:visited {
+    background-color: #00ff90;
+    color: white;
+    padding: 14px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 20px;
+    border-radius: 25px;
+}
+
+
+#gc:hover, #gc:active {
+    background-color: red;
+}
+
+.valor:link, .valor:visited {
+    background-color: white;
+    color: black;
+    padding: 14px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    width: 88px;
+}
+
+
+.valor:hover, .valor:active {
+    background-color: #00ff90;
+    color: white;
+}
+
+#inc:link, #inc:visited {
+    background-color: #00ff90;
+    color: white;
+    padding-top: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 20px;
+    margin-left: 8px;
+    width: 90px;
+    height: 40px;
+}
+
+
+#inc:hover, #inc:active {
+    background-color: red;
+}
+
+#dec:link, #dec:visited {
+    background-color: #00ff90;
+    color: white;
+    padding-top: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 20px;
+    margin-right: 8px;
+    margin-left: 426px;
+    width:90px;
+    height: 40px;
+}
+
+
+#dec:hover, #dec:active {
+    background-color: red;
+}
+
+#anoLabel {
+    background-color: aqua;
+    color: white;
+    text-align: center;
+    margin-left: 8px;
+    margin-right: 8px;
+    width: 90px;
+    height: 40px;
+    padding-top: 10px;
+}
+
+.selectAno{
+    width: 90px;
+    height: 25px;
+    margin-left: 510px;
+    margin-right: 5px;
+
+}
+
+.definir {
+    width: 60px;
+    height: 25px;
+    margin-left: 5px;
+    background-color: aqua;
+    color: white;
+   
+}

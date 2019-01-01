@@ -37,6 +37,7 @@ namespace SGF.Controllers
             LAD.UsuarioLAD.cadastrar(user);
             Session["User"] = LAD.UsuarioLAD.Pesquisar.conferir(user.email, user.senha).id;
             Session["Nome"] = user.nome;
+            Session["Ano"] = 2018;
 
             return View(user);
         }

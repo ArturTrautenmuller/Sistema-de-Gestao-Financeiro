@@ -18,6 +18,8 @@ namespace SGF
         public Nullable<int> gasto_id { get; set; }
         public string nome { get; set; }
         public Nullable<double> valor { get; set; }
+        public Nullable<int> tipo { get; set; }
+        public Nullable<int> dia { get; set; }
     
         public virtual Gasto Gasto { get; set; }
     }

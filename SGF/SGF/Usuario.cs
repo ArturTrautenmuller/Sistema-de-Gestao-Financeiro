@@ -17,6 +17,7 @@ namespace SGF
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Usuario()
         {
+            this.Renda = new HashSet<Renda>();
             this.TipoGasto = new HashSet<TipoGasto>();
         }
     
@@ -25,6 +26,8 @@ namespace SGF
         public string senha { get; set; }
         public string email { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Renda> Renda { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TipoGasto> TipoGasto { get; set; }
     }

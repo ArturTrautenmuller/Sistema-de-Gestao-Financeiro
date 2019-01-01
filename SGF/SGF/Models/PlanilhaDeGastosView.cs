@@ -9,6 +9,7 @@ namespace SGF.Models
     {
         public Usuario user { get; set; }
         public String ano { get; set; }
+        public List<Renda> rendas { get; set; }
       
         
 
