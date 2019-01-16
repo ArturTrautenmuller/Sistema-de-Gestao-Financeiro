@@ -21,6 +21,17 @@
     <Property Name="tipo" Type="int" />
     <Property Name="dia" Type="int" />
   </EntityType>
+  <EntityType Name="Objeto">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nome" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="tipoObjeto_id" Type="int" />
+    <Property Name="valor" Type="float" />
+    <Property Name="ano" Type="int" />
+    <Property Name="mes" Type="int" />
+  </EntityType>
   <EntityType Name="Renda">
     <Key>
       <PropertyRef Name="id" />
@@ -39,6 +50,14 @@
     <Property Name="nome" Type="varchar" MaxLength="50" />
     <Property Name="usuario_id" Type="int" />
   </EntityType>
+  <EntityType Name="TipoObjeto">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="usuario_id" Type="int" />
+    <Property Name="nome" Type="varchar" MaxLength="50" />
+  </EntityType>
   <EntityType Name="Usuario">
     <Key>
       <PropertyRef Name="id" />
@@ -47,6 +66,7 @@
     <Property Name="nome" Type="varchar" MaxLength="50" />
     <Property Name="senha" Type="varchar" MaxLength="50" />
     <Property Name="email" Type="nvarchar" MaxLength="50" />
+    <Property Name="saldo" Type="float" />
   </EntityType>
   <Association Name="FK_Gasto_TipoGasto">
     <End Role="TipoGasto" Type="Self.TipoGasto" Multiplicity="0..1" />
@@ -69,6 +89,18 @@
       </Principal>
       <Dependent Role="Item">
         <PropertyRef Name="gasto_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Objeto_TipoObjeto">
+    <End Role="TipoObjeto" Type="Self.TipoObjeto" Multiplicity="0..1" />
+    <End Role="Objeto" Type="Self.Objeto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoObjeto">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Objeto">
+        <PropertyRef Name="tipoObjeto_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -96,11 +128,25 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_TipoObjeto_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+    <End Role="TipoObjeto" Type="Self.TipoObjeto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="TipoObjeto">
+        <PropertyRef Name="usuario_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="SGFModelStoreContainer">
     <EntitySet Name="Gasto" EntityType="Self.Gasto" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Objeto" EntityType="Self.Objeto" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Renda" EntityType="Self.Renda" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TipoGasto" EntityType="Self.TipoGasto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TipoObjeto" EntityType="Self.TipoObjeto" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Gasto_TipoGasto" Association="Self.FK_Gasto_TipoGasto">
       <End Role="TipoGasto" EntitySet="TipoGasto" />
@@ -110,6 +156,10 @@
       <End Role="Gasto" EntitySet="Gasto" />
       <End Role="Item" EntitySet="Item" />
     </AssociationSet>
+    <AssociationSet Name="FK_Objeto_TipoObjeto" Association="Self.FK_Objeto_TipoObjeto">
+      <End Role="TipoObjeto" EntitySet="TipoObjeto" />
+      <End Role="Objeto" EntitySet="Objeto" />
+    </AssociationSet>
     <AssociationSet Name="FK_Renda_Usuario" Association="Self.FK_Renda_Usuario">
       <End Role="Usuario" EntitySet="Usuario" />
       <End Role="Renda" EntitySet="Renda" />
@@ -117,6 +167,10 @@
     <AssociationSet Name="FK_TipoGasto_Usuario" Association="Self.FK_TipoGasto_Usuario">
       <End Role="Usuario" EntitySet="Usuario" />
       <End Role="TipoGasto" EntitySet="TipoGasto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TipoObjeto_Usuario" Association="Self.FK_TipoObjeto_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="TipoObjeto" EntitySet="TipoObjeto" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

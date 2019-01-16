@@ -27,8 +27,10 @@ namespace SGF
     
         public virtual DbSet<Gasto> Gasto { get; set; }
         public virtual DbSet<Item> Item { get; set; }
+        public virtual DbSet<Objeto> Objeto { get; set; }
         public virtual DbSet<Renda> Renda { get; set; }
         public virtual DbSet<TipoGasto> TipoGasto { get; set; }
+        public virtual DbSet<TipoObjeto> TipoObjeto { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
     }
 }

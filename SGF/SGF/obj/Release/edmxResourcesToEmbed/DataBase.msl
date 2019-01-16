@@ -24,6 +24,18 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Objeto">
+      <EntityTypeMapping TypeName="SGFModel.Objeto">
+        <MappingFragment StoreEntitySet="Objeto">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nome" ColumnName="nome" />
+          <ScalarProperty Name="tipoObjeto_id" ColumnName="tipoObjeto_id" />
+          <ScalarProperty Name="valor" ColumnName="valor" />
+          <ScalarProperty Name="ano" ColumnName="ano" />
+          <ScalarProperty Name="mes" ColumnName="mes" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Renda">
       <EntityTypeMapping TypeName="SGFModel.Renda">
         <MappingFragment StoreEntitySet="Renda">
@@ -44,6 +56,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="TipoObjeto">
+      <EntityTypeMapping TypeName="SGFModel.TipoObjeto">
+        <MappingFragment StoreEntitySet="TipoObjeto">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="usuario_id" ColumnName="usuario_id" />
+          <ScalarProperty Name="nome" ColumnName="nome" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Usuario">
       <EntityTypeMapping TypeName="SGFModel.Usuario">
         <MappingFragment StoreEntitySet="Usuario">
@@ -51,6 +72,7 @@
           <ScalarProperty Name="nome" ColumnName="nome" />
           <ScalarProperty Name="senha" ColumnName="senha" />
           <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="saldo" ColumnName="saldo" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

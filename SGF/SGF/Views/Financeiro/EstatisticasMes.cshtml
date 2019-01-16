@@ -1,0 +1,78 @@
+﻿
+@{
+    ViewBag.Title = "EstatisticasMes";
+}
+@model SGF.Models.EstatisticasMesView
+@{
+    List<Gasto> gastos = new List<Gasto>();
+    foreach (TipoGasto cat in Model.categorias) {
+        var query = from gasto in cat.Gasto where (gasto.mes == (int)Session["Mes"] && gasto.ano == (int)Session["Ano"]) select gasto;
+        try { gastos.Add(query.ToList()[0]); }
+        catch { gastos.Add(new Gasto() {valor = 0 }); }
+    }
+
+    double essencialValor = 0, naoEssencialValor = 0, investimentoValor = 0;
+    foreach (Gasto gasto in gastos) {
+        foreach (Item item in gasto.Item) {
+            if (item.tipo == 0 || item.tipo == null) { essencialValor += (double)item.valor; }
+            if (item.tipo == 1) {naoEssencialValor += (double)item.valor;}
+            if (item.tipo == 2) { investimentoValor += (double)item.valor; }
+        }
+    }
+}
+
+
+    <h2>EstatisticasMes</h2>
+<link rel="stylesheet" href="~/Content/EstatisticasMes.css" />
+
+    <div id="graficoCategorias">
+        <canvas class="graficoCategorias"></canvas>
+    </div>
+<div id="graficoTipo">
+    <canvas class="graficoTipo"></canvas>
+
+</div>
+
+
+
+    <script src="~/Scripts/Grammar.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script>
+    var ctx = document.getElementsByClassName("graficoCategorias");
+    var lbl = [];
+    var colors = ["#f00", "#0f0", "#00f", "#28B463", "#F4D03F", "#48C9B0", "#AF7AC5", "#58D68D", "#8E44AD", "#78281F", "#5D6D7E", "#0ff", "#530E3F", "#1265b3", "#a145b2"];
+    @{ foreach(TipoGasto cat in Model.categorias) {
+           @: lbl.push(fixGrammar("@cat.nome"));
+
+       }}
+
+    var myPieChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+       labels: lbl,
+            datasets: [{
+                backgroundColor: colors,
+           data:[@{foreach(Gasto gasto in gastos){
+                        @(gasto.valor+",")
+                    } }]
+            }]
+        },
+        options: {}
+    });
+
+    var ctxTipo = document.getElementsByClassName("graficoTipo");
+     var myPieChart1 = new Chart(ctxTipo, {
+        type: 'doughnut',
+        data: {
+            labels: ['Essencial', 'Não Essencial', 'Investimento'],
+            datasets: [{
+                backgroundColor:["#0f0","#f00","#00f"],
+                data:[@essencialValor,@naoEssencialValor,@investimentoValor]
+            }]
+
+        },
+        options: {}
+
+    })
+
+</script>

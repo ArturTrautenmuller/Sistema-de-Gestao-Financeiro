@@ -19,16 +19,20 @@ namespace SGF
         {
             this.Renda = new HashSet<Renda>();
             this.TipoGasto = new HashSet<TipoGasto>();
+            this.TipoObjeto = new HashSet<TipoObjeto>();
         }
     
         public int id { get; set; }
         public string nome { get; set; }
         public string senha { get; set; }
         public string email { get; set; }
+        public Nullable<double> saldo { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Renda> Renda { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TipoGasto> TipoGasto { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TipoObjeto> TipoObjeto { get; set; }
     }
 }

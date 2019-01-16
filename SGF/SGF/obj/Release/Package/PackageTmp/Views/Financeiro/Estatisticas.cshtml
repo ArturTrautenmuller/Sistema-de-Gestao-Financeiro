@@ -169,7 +169,46 @@
 
 
 </div>
+<hr />
 
+<div id="resultadoFinal">
+    @{ 
+        double salarioAnual = 0, gastoAnual = 0, restanteAnual = 0;
+        foreach(Renda rendaMes in rendas)
+        {
+            salarioAnual += (double)rendaMes.valor;
+
+        }
+
+        foreach (double gastoMes in gastoTotal)
+        {
+            gastoAnual += gastoMes;
+
+        }
+
+        foreach (double restanteMes in restante)
+        {
+            restanteAnual += restanteMes; ;
+
+        }
+    }
+    <table>
+        <tr>
+            <td><label>Salário anual</label></td>
+            <td><label>@($"{salarioAnual:C}")</label></td>
+        </tr>
+        <tr>
+            <td><label>Gasto anual</label></td>
+            <td><label>@($"{gastoAnual:C}")</label></td>
+        </tr>
+        <tr>
+            <td><label>Restante</label></td>
+            <td><label>@($"{restanteAnual:C}")</label></td>
+        </tr>
+    </table>
+</div>
+
+<script src="~/Scripts/Grammar.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script type="text/javascript" charset="iso-8859-1">
     var ctx = document.getElementsByClassName("grafico");
@@ -211,7 +250,7 @@
 
 
    @{ foreach(TipoGasto cat in Model.categorias) {
-           @: lbl.push("@cat.nome");
+           @: lbl.push(fixGrammar("@cat.nome"));
 
        }}
 

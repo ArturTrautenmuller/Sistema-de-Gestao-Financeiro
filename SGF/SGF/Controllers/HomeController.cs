@@ -4,6 +4,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SGF.Models;
+using System.IO;
+using System.Text;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
+using OfficeOpenXml.Table;
+using System.ComponentModel;
+using System.Data;
+
 
 namespace SGF.Controllers
 {
@@ -34,10 +42,12 @@ namespace SGF.Controllers
             user.nome = cadastro.nome;
             user.email = cadastro.email;
             user.senha = cadastro.senha;
+            user.saldo = 0;
             LAD.UsuarioLAD.cadastrar(user);
             Session["User"] = LAD.UsuarioLAD.Pesquisar.conferir(user.email, user.senha).id;
             Session["Nome"] = user.nome;
             Session["Ano"] = 2018;
+            Session["Saldo"] = user.saldo;
 
             return View(user);
         }
@@ -61,10 +71,31 @@ namespace SGF.Controllers
                
                 Session["User"] = user.id;
                 Session["Nome"] = user.nome;
+                Session["Saldo"] = user.saldo;
                 return RedirectToAction("UserPage","User");
         }
         }
 
-        
+        public FileStreamResult CreateFile()
+        {
+            //todo: add some data from your database into that string:
+            var string_with_your_data = "ola mundo";
+
+            var byteArray = Encoding.ASCII.GetBytes(string_with_your_data);
+            var stream = new MemoryStream(byteArray);
+
+            return File(stream, "text/plain", "your_file_name.txt");
+        }
+
+        [HttpGet]
+        public FileContentResult ExportToExcel()
+        {
+            List<Technology> technologies = StaticData.Technologies;
+            string[] columns = { "Name", "Project", "Developer" };
+            byte[] filecontent = GerarTabela.ExportExcel(technologies, "Technology", true, columns);
+            return File(filecontent, GerarTabela.ExcelContentType, "Technologies.xlsx");
+        }
+
+
     }
 }

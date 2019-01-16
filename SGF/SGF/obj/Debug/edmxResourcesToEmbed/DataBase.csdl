@@ -24,6 +24,18 @@
     <Property Name="dia" Type="Int32" />
     <NavigationProperty Name="Gasto" Relationship="Self.FK_Item_Gasto1" FromRole="Item" ToRole="Gasto" />
   </EntityType>
+  <EntityType Name="Objeto">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="tipoObjeto_id" Type="Int32" />
+    <Property Name="valor" Type="Double" />
+    <Property Name="ano" Type="Int32" />
+    <Property Name="mes" Type="Int32" />
+    <NavigationProperty Name="TipoObjeto" Relationship="Self.FK_Objeto_TipoObjeto" FromRole="Objeto" ToRole="TipoObjeto" />
+  </EntityType>
   <EntityType Name="Renda">
     <Key>
       <PropertyRef Name="id" />
@@ -45,6 +57,16 @@
     <NavigationProperty Name="Gasto" Relationship="Self.FK_Gasto_TipoGasto" FromRole="TipoGasto" ToRole="Gasto" />
     <NavigationProperty Name="Usuario" Relationship="Self.FK_TipoGasto_Usuario" FromRole="TipoGasto" ToRole="Usuario" />
   </EntityType>
+  <EntityType Name="TipoObjeto">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="usuario_id" Type="Int32" />
+    <Property Name="nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Objeto" Relationship="Self.FK_Objeto_TipoObjeto" FromRole="TipoObjeto" ToRole="Objeto" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK_TipoObjeto_Usuario" FromRole="TipoObjeto" ToRole="Usuario" />
+  </EntityType>
   <EntityType Name="Usuario">
     <Key>
       <PropertyRef Name="id" />
@@ -53,8 +75,10 @@
     <Property Name="nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="senha" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="saldo" Type="Double" />
     <NavigationProperty Name="Renda" Relationship="Self.FK_Renda_Usuario" FromRole="Usuario" ToRole="Renda" />
     <NavigationProperty Name="TipoGasto" Relationship="Self.FK_TipoGasto_Usuario" FromRole="Usuario" ToRole="TipoGasto" />
+    <NavigationProperty Name="TipoObjeto" Relationship="Self.FK_TipoObjeto_Usuario" FromRole="Usuario" ToRole="TipoObjeto" />
   </EntityType>
   <Association Name="FK_Gasto_TipoGasto">
     <End Role="TipoGasto" Type="Self.TipoGasto" Multiplicity="0..1" />
@@ -77,6 +101,18 @@
       </Principal>
       <Dependent Role="Item">
         <PropertyRef Name="gasto_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Objeto_TipoObjeto">
+    <End Role="TipoObjeto" Type="Self.TipoObjeto" Multiplicity="0..1" />
+    <End Role="Objeto" Type="Self.Objeto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoObjeto">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Objeto">
+        <PropertyRef Name="tipoObjeto_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -104,11 +140,25 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_TipoObjeto_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+    <End Role="TipoObjeto" Type="Self.TipoObjeto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="TipoObjeto">
+        <PropertyRef Name="usuario_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="SGFEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Gasto" EntityType="Self.Gasto" />
     <EntitySet Name="Item" EntityType="Self.Item" />
+    <EntitySet Name="Objeto" EntityType="Self.Objeto" />
     <EntitySet Name="Renda" EntityType="Self.Renda" />
     <EntitySet Name="TipoGasto" EntityType="Self.TipoGasto" />
+    <EntitySet Name="TipoObjeto" EntityType="Self.TipoObjeto" />
     <EntitySet Name="Usuario" EntityType="Self.Usuario" />
     <AssociationSet Name="FK_Gasto_TipoGasto" Association="Self.FK_Gasto_TipoGasto">
       <End Role="TipoGasto" EntitySet="TipoGasto" />
@@ -118,6 +168,10 @@
       <End Role="Gasto" EntitySet="Gasto" />
       <End Role="Item" EntitySet="Item" />
     </AssociationSet>
+    <AssociationSet Name="FK_Objeto_TipoObjeto" Association="Self.FK_Objeto_TipoObjeto">
+      <End Role="TipoObjeto" EntitySet="TipoObjeto" />
+      <End Role="Objeto" EntitySet="Objeto" />
+    </AssociationSet>
     <AssociationSet Name="FK_Renda_Usuario" Association="Self.FK_Renda_Usuario">
       <End Role="Usuario" EntitySet="Usuario" />
       <End Role="Renda" EntitySet="Renda" />
@@ -125,6 +179,10 @@
     <AssociationSet Name="FK_TipoGasto_Usuario" Association="Self.FK_TipoGasto_Usuario">
       <End Role="Usuario" EntitySet="Usuario" />
       <End Role="TipoGasto" EntitySet="TipoGasto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TipoObjeto_Usuario" Association="Self.FK_TipoObjeto_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="TipoObjeto" EntitySet="TipoObjeto" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

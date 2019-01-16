@@ -51,7 +51,11 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="EPPlus, Version=4.5.3.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.4.5.3\lib\net40\EPPlus.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -186,18 +190,30 @@
     <Compile Include="Models\EditCategoriaView.cs" />
     <Compile Include="Models\EditGastoView.cs" />
     <Compile Include="Models\EditRendaView.cs" />
+    <Compile Include="Models\EstatisticasMesView.cs" />
     <Compile Include="Models\EstatisticasView.cs" />
+    <Compile Include="Models\ExportCategorias.cs" />
+    <Compile Include="Models\GerarTabela.cs" />
     <Compile Include="Models\IndexView.cs" />
     <Compile Include="Models\LAD.cs" />
     <Compile Include="Models\ModelToView.cs" />
+    <Compile Include="Models\PlanilhaDeGastosMensalView.cs" />
     <Compile Include="Models\PlanilhaDeGastosView.cs" />
+    <Compile Include="Models\StaticData.cs" />
+    <Compile Include="Models\Technology.cs" />
     <Compile Include="Models\UsuarioView.cs" />
+    <Compile Include="Objeto.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\LoginDados.cs" />
     <Compile Include="Renda.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="TipoGasto.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TipoObjeto.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Usuario.cs">
@@ -215,9 +231,11 @@
     <Content Include="Content\EditGastos.css" />
     <Content Include="Content\EditRenda.css" />
     <Content Include="Content\Estatisticas.css" />
+    <Content Include="Content\EstatisticasMes.css" />
     <Content Include="Content\Logar.css" />
     <Content Include="Content\PlanilhaDeGastos.css" />
     <Content Include="Content\PlanilhaDeGastos1.css" />
+    <Content Include="Content\PlanilhaDeGastosMensal.css" />
     <Content Include="Content\UserPage.css" />
     <Content Include="DataBase.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -233,6 +251,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -249,6 +268,7 @@
     <None Include="Properties\PublishProfiles\CustomProfile1.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile2.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\Grammar.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -259,7 +279,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -282,6 +304,8 @@
     <Content Include="Views\Financeiro\EditRenda.cshtml" />
     <Content Include="Views\Financeiro\EditCategorias.cshtml" />
     <Content Include="Views\Financeiro\Estatisticas.cshtml" />
+    <Content Include="Views\Financeiro\PlanilhaDeGastosMensal.cshtml" />
+    <Content Include="Views\Financeiro\EstatisticasMes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

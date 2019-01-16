@@ -49,3 +49,37 @@ td, th {
     background-color: #00ff90;
     color: white;
 }
+
+#removerTudoLink:link, #removerTudoLink:visited {
+    background-color: white;
+    color: black;
+    padding-top: 0px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    width: 200px;
+    height: 25px;
+    margin-top: 4px;
+}
+
+#removerTudoLink:hover, #removerTudoLink:active {
+    background-color: red;
+    color: white;
+}
+
+#retornarLink:link, #retornarLink:visited {
+    background-color: white;
+    color: black;
+    padding-top: 0px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    width: 200px;
+    height: 25px;
+    margin-top: 4px;
+}
+
+#retornarLink:hover, #retornarLink:active {
+    background-color: #0ff;
+    color: white;
+}

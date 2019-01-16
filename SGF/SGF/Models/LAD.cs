@@ -66,6 +66,29 @@ namespace SGF.Models
                     db.SaveChanges();
 
                 }
+
+                public static void saldo(int id, double saldo)
+                {
+                    SGFEntities db = new SGFEntities();
+                    Usuario currentUser = db.Usuario.First(x => x.id == id);
+                    currentUser.saldo = saldo;
+                    db.SaveChanges();
+                }
+
+                public static void addSaldo(int id, double valor) {
+                    SGFEntities db = new SGFEntities();
+                    Usuario currentUser = db.Usuario.First(x => x.id == id);
+                    currentUser.saldo += valor;
+                    db.SaveChanges();
+                }
+
+                public static void reduceSaldo(int id, double valor)
+                {
+                    SGFEntities db = new SGFEntities();
+                    Usuario currentUser = db.Usuario.First(x => x.id == id);
+                    currentUser.saldo -= valor;
+                    db.SaveChanges();
+                }
             }
         }
 
@@ -115,6 +138,13 @@ namespace SGF.Models
                 db.SaveChanges();
 
             }
+
+            public static void atualizar(int id, String nome) {
+                SGFEntities db = new SGFEntities();
+                TipoGasto cat = db.TipoGasto.SingleOrDefault(x => x.id == id);
+                cat.nome = nome;
+                db.SaveChanges();
+            }
         }
 
         public static class GastoLAD {
@@ -124,6 +154,16 @@ namespace SGF.Models
                     SGFEntities db = new SGFEntities();
                     return db.Gasto.SingleOrDefault(x => x.id == id);
 
+                }
+
+                public static Gasto tudo(int ano, int mes, int catId) {
+                    SGFEntities db = new SGFEntities();
+                    return db.Gasto.SingleOrDefault(x => x.ano == ano && x.mes == mes && x.tipoGasto_id == catId);
+                }
+
+                public static Gasto data(int ano, int mes, int catId) {
+                    SGFEntities db = new SGFEntities();
+                    return db.Gasto.SingleOrDefault(x => x.mes == mes && x.ano == ano && x.tipoGasto_id == catId);
                 }
 
                 
@@ -173,6 +213,21 @@ namespace SGF.Models
                 db.Item.Add(item);
                 db.SaveChanges();
             }
+
+            public static Item pesquisar(int id) {
+                SGFEntities db = new SGFEntities();
+                return db.Item.SingleOrDefault(x => x.id == id);
+            }
+
+            public static void atualizar(int id, double valor, String nome, int dia, int tipo) {
+                SGFEntities db = new SGFEntities();
+                Item item =  db.Item.SingleOrDefault(x => x.id == id);
+                item.nome = nome;
+                item.valor = valor;
+                item.dia = dia;
+                item.tipo = tipo;
+                db.SaveChanges();
+            }
         }
 
         public static class RendaLAD {
@@ -180,6 +235,13 @@ namespace SGF.Models
                 public static List<Renda> ano(int ano,int id) {
                     SGFEntities db = new SGFEntities();
                     return db.Renda.SqlQuery("SELECT * FROM Renda WHERE ano = " + ano+ "AND Usuario_id = "+id).ToList<Renda>();
+                }
+
+                public static Renda renda(int user_id, int mes, int ano)
+                {
+                    SGFEntities db = new SGFEntities();
+                    return db.Renda.SingleOrDefault(x => x.usuario_id == user_id && x.mes == mes && x.ano == ano);
+
                 }
             }
 

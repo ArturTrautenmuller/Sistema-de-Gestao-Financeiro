@@ -27,6 +27,9 @@ ao editar este arquivo MSBuild. Para saber mais sobre isso, visite https://go.mi
     <File Include="bin/EntityFramework.SqlServer.dll">
       <publishTime>06/07/2018 11:03:48</publishTime>
     </File>
+    <File Include="bin/EPPlus.dll">
+      <publishTime>01/06/2019 08:49:10</publishTime>
+    </File>
     <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
       <publishTime>06/27/2017 12:59:34</publishTime>
     </File>
@@ -220,10 +223,10 @@ ao editar este arquivo MSBuild. Para saber mais sobre isso, visite https://go.mi
       <publishTime>05/24/2018 13:38:24</publishTime>
     </File>
     <File Include="bin/SGF.dll">
-      <publishTime>01/01/2019 14:13:56</publishTime>
+      <publishTime>01/16/2019 17:22:33</publishTime>
     </File>
     <File Include="bin/SGF.pdb">
-      <publishTime>01/01/2019 14:13:56</publishTime>
+      <publishTime>01/16/2019 17:22:33</publishTime>
     </File>
     <File Include="bin/System.Diagnostics.DiagnosticSource.dll">
       <publishTime>07/19/2017 10:01:30</publishTime>
@@ -286,22 +289,37 @@ ao editar este arquivo MSBuild. Para saber mais sobre isso, visite https://go.mi
       <publishTime>12/25/2018 16:33:51</publishTime>
     </File>
     <File Include="Content/EditGastos.css">
-      <publishTime>12/30/2018 19:01:45</publishTime>
+      <publishTime>01/02/2019 10:37:14</publishTime>
     </File>
     <File Include="Content/EditRenda.css">
       <publishTime>12/25/2018 16:44:04</publishTime>
     </File>
     <File Include="Content/Estatisticas.css">
-      <publishTime>12/31/2018 18:42:15</publishTime>
+      <publishTime>01/01/2019 19:10:03</publishTime>
+    </File>
+    <File Include="Content/EstatisticasMes.css">
+      <publishTime>01/09/2019 19:45:49</publishTime>
+    </File>
+    <File Include="Content/Images/delete.png">
+      <publishTime>01/16/2019 10:59:16</publishTime>
+    </File>
+    <File Include="Content/Images/img9.png">
+      <publishTime>01/16/2019 11:09:29</publishTime>
+    </File>
+    <File Include="Content/Images/trash.jpg">
+      <publishTime>01/16/2019 11:11:47</publishTime>
     </File>
     <File Include="Content/Logar.css">
       <publishTime>12/23/2018 16:02:46</publishTime>
     </File>
     <File Include="Content/PlanilhaDeGastos.css">
-      <publishTime>12/31/2018 13:57:43</publishTime>
+      <publishTime>01/16/2019 11:23:38</publishTime>
     </File>
     <File Include="Content/PlanilhaDeGastos1.css">
       <publishTime>12/23/2018 19:49:22</publishTime>
+    </File>
+    <File Include="Content/PlanilhaDeGastosMensal.css">
+      <publishTime>01/16/2019 13:28:58</publishTime>
     </File>
     <File Include="Content/Site.css">
       <publishTime>12/19/2018 16:13:26</publishTime>
@@ -310,7 +328,7 @@ ao editar este arquivo MSBuild. Para saber mais sobre isso, visite https://go.mi
       <publishTime>12/23/2018 18:15:19</publishTime>
     </File>
     <File Include="DataBase.edmx.diagram">
-      <publishTime>01/01/2019 11:01:45</publishTime>
+      <publishTime>01/02/2019 19:47:56</publishTime>
     </File>
     <File Include="favicon.ico">
       <publishTime>12/19/2018 16:13:26</publishTime>
@@ -333,11 +351,17 @@ ao editar este arquivo MSBuild. Para saber mais sobre isso, visite https://go.mi
     <File Include="Global.asax">
       <publishTime>12/19/2018 16:13:26</publishTime>
     </File>
+    <File Include="Scripts/bootbox.min.js">
+      <publishTime>01/04/2019 17:03:24</publishTime>
+    </File>
     <File Include="Scripts/bootstrap.js">
       <publishTime>12/19/2018 16:13:50</publishTime>
     </File>
     <File Include="Scripts/bootstrap.min.js">
       <publishTime>12/19/2018 16:13:50</publishTime>
+    </File>
+    <File Include="Scripts/Grammar.js">
+      <publishTime>01/02/2019 10:41:33</publishTime>
     </File>
     <File Include="Scripts/jquery-3.3.1.js">
       <publishTime>12/19/2018 16:13:51</publishTime>
@@ -358,16 +382,16 @@ ao editar este arquivo MSBuild. Para saber mais sobre isso, visite https://go.mi
       <publishTime>12/19/2018 16:13:51</publishTime>
     </File>
     <File Include="Scripts/jquery.validate.js">
-      <publishTime>12/19/2018 16:14:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/jquery.validate.min.js">
-      <publishTime>12/19/2018 16:14:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/jquery.validate.unobtrusive.js">
-      <publishTime>12/19/2018 16:14:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/jquery.validate.unobtrusive.min.js">
-      <publishTime>12/19/2018 16:14:00</publishTime>
+      <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="Scripts/modernizr-2.8.3.js">
       <publishTime>12/19/2018 16:13:59</publishTime>
@@ -376,25 +400,31 @@ ao editar este arquivo MSBuild. Para saber mais sobre isso, visite https://go.mi
       <publishTime>12/27/2018 20:07:49</publishTime>
     </File>
     <File Include="Views/Financeiro/EditGasto.cshtml">
-      <publishTime>01/01/2019 11:24:07</publishTime>
+      <publishTime>01/02/2019 10:39:35</publishTime>
     </File>
     <File Include="Views/Financeiro/EditRenda.cshtml">
       <publishTime>12/27/2018 20:09:44</publishTime>
     </File>
     <File Include="Views/Financeiro/Estatisticas.cshtml">
-      <publishTime>01/01/2019 00:20:00</publishTime>
+      <publishTime>01/01/2019 19:42:49</publishTime>
+    </File>
+    <File Include="Views/Financeiro/EstatisticasMes.cshtml">
+      <publishTime>01/09/2019 19:48:09</publishTime>
     </File>
     <File Include="Views/Financeiro/PlanilhaDeGastos.cshtml">
-      <publishTime>01/01/2019 13:57:02</publishTime>
+      <publishTime>01/16/2019 17:19:11</publishTime>
+    </File>
+    <File Include="Views/Financeiro/PlanilhaDeGastosMensal.cshtml">
+      <publishTime>01/16/2019 13:39:33</publishTime>
     </File>
     <File Include="Views/Home/Cadastro.cshtml">
-      <publishTime>12/24/2018 18:46:51</publishTime>
+      <publishTime>01/02/2019 10:39:35</publishTime>
     </File>
     <File Include="Views/Home/CadastroFinal.cshtml">
       <publishTime>12/24/2018 18:58:49</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>12/31/2018 18:28:36</publishTime>
+      <publishTime>01/15/2019 11:52:37</publishTime>
     </File>
     <File Include="Views/Home/Logar.cshtml">
       <publishTime>12/23/2018 15:54:45</publishTime>
@@ -403,7 +433,7 @@ ao editar este arquivo MSBuild. Para saber mais sobre isso, visite https://go.mi
       <publishTime>12/19/2018 16:13:26</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>12/31/2018 13:43:56</publishTime>
+      <publishTime>01/09/2019 19:52:37</publishTime>
     </File>
     <File Include="Views/User/UserPage.cshtml">
       <publishTime>12/27/2018 20:06:51</publishTime>
@@ -415,7 +445,7 @@ ao editar este arquivo MSBuild. Para saber mais sobre isso, visite https://go.mi
       <publishTime>12/19/2018 16:13:26</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>01/01/2019 14:13:57</publishTime>
+      <publishTime>01/16/2019 17:22:35</publishTime>
     </File>
   </ItemGroup>
 </Project>

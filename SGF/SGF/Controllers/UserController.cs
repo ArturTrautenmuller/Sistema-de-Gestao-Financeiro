@@ -19,6 +19,7 @@ namespace SGF.Controllers
         public ActionResult Sair() {
             Session["User"] = null;
             Session["Nome"] = null;
+            Session["Saldo"] = null;
            return RedirectToAction("Index", "Home");
         }
 

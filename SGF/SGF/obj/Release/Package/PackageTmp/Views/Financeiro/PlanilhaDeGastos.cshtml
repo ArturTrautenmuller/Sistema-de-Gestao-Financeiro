@@ -39,6 +39,8 @@
 
 <h2>PlanilhaDeGastos</h2>
 <link rel="stylesheet" href="~/Content/PlanilhaDeGastos.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="~/Scripts/Grammar.js"></script>
 
 
 <div>
@@ -61,10 +63,16 @@
     <a id="inc" href="@Url.Action("incrementarAno", "Financeiro")">@anoSeguinte  ❯</a>
 </div>
 <hr />
+<div>
+    <label>Saldo: @($"{Model.user.saldo:C}")</label><button onclick="mudarSaldo()">Definir</button>
+</div>
+<hr />
+<button id="ac" onclick="addCategoria()">Nova Categoria</button>
 <a id="gc" href="@Url.Action("EditCategorias","Financeiro")">Gerenciar Categorias</a>
 <a id="gs" href="@Url.Action("EditRenda","Financeiro")">Gerenciar Salário</a>
 <a id="e" href="@Url.Action("Estatisticas","Financeiro")">Estatisticas</a>
-
+<a id="pgm" href="@Url.Action("PlanilhaDeGastosMensal", "Financeiro", new Gasto() { tipoGasto_id = 0, id = 0 })">Planilha Mensal</a>
+<a id="ee" href="@Url.Action("ExportToExcel")">Export</a>
 <hr />
 
 <div id="Tabela">
@@ -89,7 +97,7 @@
             <th>Salário</th>
             @for (int i = 0; i <= 11; i++)
             {
-            <th>@($"{rendas[i]:C}")</th>
+            <th id= "@i" onclick="editSalario(event)">@($"{rendas[i]:C}")</th>
             }
 
         </tr>
@@ -127,7 +135,7 @@
             {
                 if (valor.valor == -1)
                 {
-                    <th><a class="valor" href="@Url.Action("criarGasto", "Financeiro", valor)">Criar</a></th>}
+                    <th><a class="valor" href="@Url.Action("criarGasto", "Financeiro", valor)">R$0,00</a></th>}
                 else
                 {
                     
@@ -136,6 +144,7 @@
                 
 
             }
+                        <th><button class="btn" onclick="removeCategoria(@cat.id)"><i class="fa fa-trash"></i></button> <button class="btn" onclick="editCategoria(@cat.id,'@cat.nome')"><i class="fa fa-edit"></i></button></th>
 
         </tr>
 
@@ -191,5 +200,41 @@
         var th = document.getElementById("m" + month);
         th.style.backgroundColor = "#0ff";
         th.style.color = "white";
+    }
+
+    function mudarSaldo() {
+        var saldo = prompt("Digite o saldo", "@Model.user.saldo");
+        if (saldo != null) {
+            window.location.href = "definirSaldo?saldo=" + saldo;
+        }
+    }
+
+    function addCategoria() {
+        var cat = prompt("Digite o Nome da Categoria", "");
+        if (cat != null) {
+            window.location.href = "adicionarCategoriaDireto?cat=" + cat;
+        }
+    }
+
+    function editSalario(e) {
+        var mes = parseInt(e.srcElement.id) + 1;
+        var valor = prompt("Digite o valor do Salário");
+        if (valor != null) {
+            window.location.href = "setRenda?mes=" + mes + "&valor=" + valor;
+        }
+    }
+
+    function removeCategoria(id) {
+        var c = confirm("Tem certeza que deseja remover esta categoria?");
+        if (c == true) {
+            window.location.href = "RemoverCategoriaDireto?cat=" + id;
+        }
+    }
+
+    function editCategoria(id, ultimoNome) {
+        var novoNome = prompt("Digite o novo Nome", ultimoNome);
+        if (novoNome != null) {
+            window.location.href = "trocarNomeCategoria?cat=" + id + "&nome=" + novoNome;
+        }
     }
 </script>

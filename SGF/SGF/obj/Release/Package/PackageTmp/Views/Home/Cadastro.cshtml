@@ -21,7 +21,8 @@
 
 @{ 
     if (Model.errorMessage != null) {
-        <script charset="utf-8">alert("@Model.errorMessage");</script>
+        <script src="~/Scripts/Grammar.js"></script>
+        <script charset="utf-8">alert(fixGrammar("@Model.errorMessage"));</script>
     }
 
 }

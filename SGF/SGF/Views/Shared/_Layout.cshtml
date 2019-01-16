@@ -21,19 +21,33 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="@Url.Action("Index","Home")" style="margin-left:800px;">Inicio</a></li>
+                    
 
 
                     @{
 
                         if (Session["User"] != null)
                         {
-                            <li> <a href="@Url.Action("UserPage","User")">Minha Conta</a></li>
-                            <li> <a href="@Url.Action("Sair","User")">Sair</a></li> 
+                            <li class="dropdown" style="margin-left:800px;"> 
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="@Url.Action("UserPage","User")">Minha Conta<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="@Url.Action("UserPage","User")">Pagina do Usuario</a></li>
+                                    <hr />
+                                    <li><a href="@Url.Action("PlanilhaDeGastos","Financeiro")">Planilha de Gastos</a></li>
+                                    <li><a href="@Url.Action("Estatisticas","Financeiro")">Estatisticas</a></li>
+                                    <li><a href="@Url.Action("PlanilhaDeGastosMensal","Financeiro", new Gasto() {id = 0, valor = 0})">Planilha de Gastos do Mês</a></li>
+                                    <li><a href="@Url.Action("EstatisticasMes","Financeiro")">Estatisticas do Mês</a></li>
+                                    <hr />
+                                    <li><a href="@Url.Action("Sair","User")">Sair</a></li>
+                                </ul>
+                            
+                            </li>
+                            <li><a>@($"{Session["Saldo"]:C}")</a></li>
+                            
                         }
                         else
                         {
-                            <li><a href="@Url.Action("Cadastro","Home")">Cadastrar</a></li>
+                            <li style="margin-left:850px;"><a href="@Url.Action("Cadastro","Home")">Cadastrar</a></li>
                             <li> <a href="@Url.Action("Logar","Home")">Entrar</a></li>
 
                         }
@@ -44,6 +58,9 @@
         </div>
     </div>
     <div class="container body-content">
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
         @RenderBody()
         <hr />
         <footer>
@@ -51,8 +68,6 @@
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+    
 </body>
 </html>

@@ -1,0 +1,183 @@
+﻿
+@{
+    ViewBag.Title = "PlanilhaDeGastosMensal";
+}
+@model SGF.Models.PlanilhaDeGastosMensalView
+<h2>PlanilhaDeGastosMensal</h2>
+<link rel="stylesheet" href="~/Content/PlanilhaDeGastosMensal.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+@{
+    List<String> tipoItem = new List<string>();
+    tipoItem.Add("Essencial");
+    tipoItem.Add("Não-Essencial");
+    tipoItem.Add("Investimento");
+
+    String[] meses = { "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Junlho", "Agosto", "Setembro", "Outubro", "Novembrp", "Dezembro" };
+
+}
+
+<div id="renda">
+    <label> Salário: @($"{Model.renda.valor:C}")</label><button onclick="setRenda()">Redefinir</button>
+    <a href="@Url.Action("EstatisticasMes","Financeiro")">estatisticas</a>
+</div>
+<div id="meses">
+    <a id="dec" href="@Url.Action("decrementarMes","Financeiro")">❮</a>
+    <label id="mesLabel">@meses[(int)Session["Mes"] - 1] , @Session["Ano"]</label>
+    <a id="inc" href="@Url.Action("incrementarMes","Financeiro")">❯</a>
+</div>
+
+<div id="lista">
+    @{
+
+        foreach (TipoGasto cat in Model.categorias)
+        {
+            var query = from gasto in cat.Gasto where (gasto.mes == (int)Session["Mes"] && gasto.tipoGasto_id == cat.id && gasto.ano == (int)Session["Ano"]) select gasto;
+            Gasto gastoCat = new Gasto();
+            try { gastoCat = query.ToList()[0]; }
+            catch (Exception e)
+            {
+                gastoCat.id = 0;
+                gastoCat.tipoGasto_id = cat.id;
+                gastoCat.valor = 0;
+            }
+            <button class="collapsible"><label class="catNomeLabel">@cat.nome</label><label class="catValorLabel">@($"{gastoCat.valor:C}")</label></button>
+            <div class="content" id="@cat.id">
+                <table>
+                    <tr>
+                        <td><label>Nome</label></td>
+                        <td><label>Valor</label></td>
+                        <td><label>Tipo</label></td>
+                        <td><label>Data</label></td>
+                    </tr>
+                    @foreach (Item item in gastoCat.Item)
+                    {
+
+                    <tr>
+                        <td><label>@item.nome</label></td>
+                        <td><label>@($"{item.valor:C}")</label></td>
+                        @{
+                            if (item.tipo == 0 || item.tipo == null)
+                            {
+                                <td><label>Essencial</label></td> }
+                            if (item.tipo == 1)
+                            {
+                                <td><label> Não Essencial</label></td> }
+                            if (item.tipo == 2)
+                            {
+                                <td><label>Investimento</label></td> }
+                        }
+                        @if (item.dia == null)
+                        {
+                            <td><label>Sem Data</label></td> }
+                        else
+                        {
+                            DateTime dia = new DateTime((int)gastoCat.ano, (int)gastoCat.mes, (int)item.dia);
+                            <td><label>@dia.ToString("dd/MM/yyyy")</label></td>
+                        }
+                        <td><a class="btn" href="@Url.Action("removerItem1","Financeiro",item)"><i class="fa fa-trash"></i></a></td>
+                        <td><button class="btn" onclick="editItem(@item.id,' @item.nome ', @item.tipo ,@item.dia,@item.valor)"><i class="fa fa-edit"></i></button></td>
+
+
+                    </tr>
+                    }
+                    @using (Html.BeginForm("adicionarItem1", "Financeiro", FormMethod.Post))
+                    {
+
+                        <tr>
+                            <td>@Html.TextBoxFor(m => m.itemNome)</td>
+                            <td>@Html.TextBoxFor(m => m.itemValor)</td>
+                            <td>@Html.DropDownListFor(m => m.itemTipo, new SelectList(tipoItem))</td>
+                            <td>@DateTime.Now.ToString("dd/MM/yyyy")</td>
+                            <input type="text" name="gastoId" value="@gastoCat.id" class="hidden" />
+                            <input type="text" name="TipoGastoId" value="@gastoCat.tipoGasto_id" class="hidden" />
+                            <td><input class="btn" type="submit" value="Adicionar" /></td>
+                        </tr>
+                    }
+
+                </table>
+            </div>
+
+        }
+
+    }
+</div>
+<button onclick="box()"></button>
+
+
+
+<!-- bootbox code -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+
+
+<script>
+
+    var catId = @Model.catId
+if (catId != 0) {
+    var division = document.getElementById(catId.toString());
+    division.style.display = "block";
+}
+
+
+
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+    }
+
+    
+
+    function editItem(id, nome, tipo, dia, valor) {
+        var tipoOptions = "";
+        if (tipo == 0 || tipo == null) {
+            tipoOptions = "<option value='0' selected>Essencial<option/>\
+            <option value='1'>Não Essencial<option/>\
+            <option value='2'>Investimento<option/>";
+        }
+        if (tipo == 1) {
+            tipoOptions = "<option value='0'>Essencial<option/>\
+            <option value='1' selected>Não Essencial<option/>\
+            <option value='2'>Investimento<option/>";
+        }
+        if (tipo == 2) {
+            tipoOptions = "<option value='0'>Essencial<option/>\
+            <option value='1'>Não Essencial<option/>\
+            <option value='2' selected>Investimento<option/>";
+        }
+
+        var mes = @Session["Mes"]
+        var ano = @Session["Ano"]
+
+        var data = "/"+mes + "/" + ano;
+        bootbox.confirm("<form id='infos' action='@Url.Action("editItem","Financeiro")'>\
+            <input type='text' name='id' value='"+ id + "' class='hidden'/>\
+    <label class='formLabel'>Nome:</label><input class='formText' type='text' name='nome' value='"+ nome +"' /><br/>\
+    <label class='formLabel' >Valor:</label><input class='formText' type='text' name='valor' value='"+ valor +"' /><br/>\
+    <label class='formLabel'>Tipo:</label> <select class='formText' name='tipo'>\
+            "+ tipoOptions +"\
+            <select/><br/>\
+    <label class='formLabel'>Data:</label><input type='text' name='dia' class='diaText' value='"+ dia +"'><label>"+data+"<label/>\
+    </form>", function (result) {
+                if (result)
+                    $('#infos').submit();
+            });
+    }
+
+    function setRenda() {
+        var valor = prompt("Defina o novo Salário", "@Model.renda.valor");
+        if (valor != null) {
+            window.location.href = "/Financeiro/setRenda1?valor=" + valor;
+        }
+    }
+</script>

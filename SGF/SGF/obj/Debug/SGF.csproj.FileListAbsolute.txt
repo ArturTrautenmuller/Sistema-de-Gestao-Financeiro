@@ -100,3 +100,5 @@ C:\Users\artur\source\repos\SGF\SGF\obj\Debug\SGF.csproj.CoreCompileInputs.cache
 C:\Users\artur\source\repos\SGF\SGF\obj\Debug\SGF.csproj.CopyComplete
 C:\Users\artur\source\repos\SGF\SGF\obj\Debug\SGF.dll
 C:\Users\artur\source\repos\SGF\SGF\obj\Debug\SGF.pdb
+C:\Users\artur\source\repos\SGF\SGF\bin\EPPlus.dll
+C:\Users\artur\source\repos\SGF\SGF\bin\EPPlus.xml

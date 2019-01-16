@@ -2,11 +2,10 @@
     ViewBag.Title = "Home Page";
 }
 @{ Session["Ano"] = DateTime.Now.Year;
-
-    
-
-    }
+    Session["Mes"] = DateTime.Now.Month;
 
 
+}
 
-
+<a href="@Url.Action("CreateFile","Home")">Download</a>
+<a href="@Url.Action("ExportToExcel")" >Export</a>

@@ -53,3 +53,9 @@ td, th {
     width: 100px;
     margin-left: 550px;
 }
+
+#resultadoFinal{
+    width: 500px;
+    margin-left: 350px;
+    margin-top: 40px;
+}
